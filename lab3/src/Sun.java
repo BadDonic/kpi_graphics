@@ -19,7 +19,7 @@ public class Sun extends Application {
   @Override
   public void start(Stage primaryStage) throws FileNotFoundException {
     Group root = new Group();
-    Scene scene = new Scene(root, 1000, 200);
+    Scene scene = new Scene(root, 200, 600);
 
     Image image = new Image(new FileInputStream("lab3/img/sun.png"));
 
@@ -28,8 +28,8 @@ public class Sun extends Application {
     imageView.setX(50);
     imageView.setY(25);
 
-    imageView.setFitHeight(150);
-    imageView.setFitWidth(150);
+    imageView.setFitHeight(100);
+    imageView.setFitWidth(100);
 
     imageView.setPreserveRatio(true);
     root.getChildren().add(imageView);
@@ -44,8 +44,8 @@ public class Sun extends Application {
     scaleTransition.setAutoReverse(true);
 
     TranslateTransition translateTransition = new TranslateTransition(Duration.millis(time), root);
-    translateTransition.setFromX(50);
-    translateTransition.setToX(750);
+    translateTransition.setFromY(50);
+    translateTransition.setToY(350);
     translateTransition.setCycleCount(cycleCount + 2);
     translateTransition.setAutoReverse(true);
 
