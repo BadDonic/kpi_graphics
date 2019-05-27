@@ -1,18 +1,14 @@
 import com.sun.j3d.utils.universe.*;
-
 import javax.media.j3d.*;
 import javax.vecmath.*;
 import javax.media.j3d.Background;
-
 import com.sun.j3d.loaders.*;
 import com.sun.j3d.loaders.objectfile.ObjectFile;
 import com.sun.j3d.utils.image.TextureLoader;
-
 import java.awt.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
-
 import javax.swing.JFrame;
 
 public class Boat extends JFrame {
@@ -26,20 +22,13 @@ public class Boat extends JFrame {
     configureWindow();
     configureCanvas();
     configureUniverse();
-
     root = new BranchGroup();
-
     addImageBackground();
-
     addDirectionalLightToUniverse();
     addAmbientLightToUniverse();
-
     ChangeViewAngle();
-
-
     boat = getBoatGroup();
     root.addChild(boat);
-
     root.compile();
     universe.addBranchGraph(root);
   }
@@ -63,7 +52,7 @@ public class Boat extends JFrame {
   }
 
   private void addImageBackground() {
-    TextureLoader t = new TextureLoader("lab5/res/puddle.jpg", canvas);
+    TextureLoader t = new TextureLoader("lab5/res/ocean.jpg", canvas);
     Background background = new Background(t.getImage());
     background.setImageScaleMode(Background.SCALE_FIT_ALL);
     BoundingSphere bounds = new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 100.0);
@@ -74,10 +63,8 @@ public class Boat extends JFrame {
   private void addDirectionalLightToUniverse() {
     BoundingSphere bounds = new BoundingSphere();
     bounds.setRadius(100);
-
     DirectionalLight light = new DirectionalLight(new Color3f(1, 1, 1), new Vector3f(-1, -1, -1));
     light.setInfluencingBounds(bounds);
-
     root.addChild(light);
   }
 
@@ -97,19 +84,14 @@ public class Boat extends JFrame {
 
 
   private TransformGroup getBoatGroup() throws IOException {
-    Shape3D shape = getModelShape3D("frame0", "lab5/res/car/Boat.obj");
-
+    Shape3D shape = getModelShape3D("frame0", "lab5/res/Boat.obj");
     Transform3D transform3D = new Transform3D();
     transform3D.setScale(new Vector3d(0.2, 0.2, 0.2));
-
-
     Transform3D rotationY = new Transform3D();
     rotationY.rotY(Math.PI / 2);
     transform3D.mul(rotationY);
-
     TransformGroup group = getModelGroup(shape);
     group.setTransform(transform3D);
-
     return group;
   }
 
@@ -139,24 +121,6 @@ public class Boat extends JFrame {
     for (String name : map.keySet()) {
       System.out.println("Name: " + name);
     }
-  }
-
-  private void addAppearance(Shape3D shape, String path) {
-    Appearance appearance = new Appearance();
-    appearance.setTexture(getTexture(path));
-    TextureAttributes attrs = new TextureAttributes();
-    attrs.setTextureMode(TextureAttributes.COMBINE);
-    appearance.setTextureAttributes(attrs);
-    shape.setAppearance(appearance);
-  }
-
-  private Texture getTexture(String path) {
-    TextureLoader textureLoader = new TextureLoader(path, "LUMINANCE", canvas);
-    Texture texture = textureLoader.getTexture();
-    texture.setBoundaryModeS(Texture.WRAP);
-    texture.setBoundaryModeT(Texture.WRAP);
-    texture.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
-    return texture;
   }
 
   public static void main(String[] args) {
